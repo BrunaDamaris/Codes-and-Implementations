@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct NODE node;
+
+struct NODE {
+	int item;
+	node *next;
+	node *previous;
+};
+
+node* create_linked_list()
+{
+	return NULL;
+}
+node* addtolist(node *head,int item)
+{
+	node* new_node = (node*) malloc(sizeof(node));
+	new_node->item = item;
+	new_node->next = head;
+	return new_node;
+}
+node* search(node *head,int item)
+{
+	while(head != NULL)
+	{
+		if(head->item == item) return head;
+		head = head->next;
+	}
+	return NULL;
+}
+node *removefromlist(node *head,int item)
+{
+	node* previous = NULL;
+	node* current = head;
+	while(current != NULL && current->item != item)
+	{
+		previous = current;
+		current = current->next;
+	}
+	if(current == NULL) return head;
+	if(previous == NULL) head = current->next;
+	else
+	{
+		previous->next = current->next;
+	}
+	free(current);
+	return head;
+}
+int is_empty(node *head)
+{
+	return (head == NULL);
+}
+void print_linked_list(node *head)
+{
+	node* current = head;
+	if (current != NULL)
+	{
+		printf("%d\n",current->item);
+		print_linked_list(current->next);
+	}
+}
+int main(int argc, char const *argv[])
+{
+	node* list = create_linked_list();
+	int *elements,size,i;
+	scanf("%d",&size);
+	elements = malloc(size * (sizeof(int)));
+	for(i=0;i < size;i++)
+	{
+		scanf("%d",&elements[i]);
+		list = addtolist(list,elements[i]);
+	}
+	print_linked_list(list);
+	return 0;
+}
