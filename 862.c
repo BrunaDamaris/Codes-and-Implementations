@@ -44,32 +44,32 @@ void check(node *head)
 	node *next = NULL;
 	while(head->next != NULL)
 	{
-		//printf("sss\n");
-		//num=0;
-		//printf("%c\n",head->item);
-		if(head->item == '1')
-		{
-			head = head->next;
-			num++;
-		}
-		//previous = head->previous;
-		if(head->item == '0')
-		{
-			count[index] = num;
-			index++;
-		}
-		next = head->next;
-		if(next->item == '0')
-		{
-			num++;
-		}
-		if(next->item == '1')
-		{
-			count[index] = num;
-			index++;
-		}
-		num++;
-		head = head->next;
+// 		//printf("sss\n");
+// 		//num=0;
+// 		//printf("%c\n",head->item);
+// 		if(head->item == '1')
+// 		{
+// 			head = head->next;
+// 			num++;
+// 		}
+// 		//previous = head->previous;
+// 		if(head->item == '0')
+// 		{
+// 			count[index] = num;
+// 			index++;
+// 		}
+// 		next = head->next;
+// 		if(next->item == '0')
+// 		{
+// 			num++;
+// 		}
+// 		if(next->item == '1')
+// 		{
+// 			count[index] = num;
+// 			index++;
+// 		}
+// 		num++;
+// 		head = head->next;
 	}
 	for(j_index=0;j_index < index;j_index++)
 	{
