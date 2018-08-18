@@ -7,7 +7,6 @@ typedef struct NODE node;
 struct NODE {
 	int item;
 	node *next;
-	node *previous;
 };
 
 node* create_linked_list()
