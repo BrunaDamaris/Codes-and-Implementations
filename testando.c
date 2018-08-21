@@ -248,7 +248,11 @@ void     print        (deque_t *deque)
     }
     else
     {
-      printf("%d ",aux->value);
+      printf("%d",aux->value);
+      if(aux->next != NULL)
+      {
+        printf(" ");
+      }
       aux = aux->next;
     }
     
