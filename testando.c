@@ -142,42 +142,51 @@ bool     empty        (deque_t *deque)
 //Retorna o valor da frente da lista, retorna int_min quando a lista estiver vazia
 int      front        (deque_t *deque)
 {
-  return deque->front->value;
+  int now;
+  now = deque->front->value;
+  return now;
 }
 //Retorna o valor do fim da lista, retorna int_min quando a lista estiver vazia
 int      rear         (deque_t *deque)
 {
-  return deque->rear->value;
+  int now;
+  now = deque->rear->value;
+  return now;
 }
 
 //Cria um nó que guarda um valor e o adiciona ao fim do deque
 void     enqueue_rear (deque_t *deque, int value)
 {
-  node_t* mynode = node_new(mynode);
+  node_t* mynode = node_new(value);
   if(deque->size == 0)
   {
     deque->front = deque->rear = mynode;
+    deque->size++;
   }
   else
   {
     deque->rear->next = mynode;
     mynode->prev = deque->rear;
     deque->rear = mynode;
+    deque->size++;
   }
 }
 //Cria um nó que guarda um valor e o adiciona ao inicio do deque
 void     enqueue_front(deque_t *deque, int value)
 {
-  node_t* mynode = node_new(mynode);
+  node_t* mynode = node_new(value);
   if(deque->size == 0)
   {
     deque->front = deque->rear = mynode;
+    deque->size++;
   }
   else
   {
     deque->front->prev = mynode;
     mynode->next = deque->front;
     deque->front = mynode;
+    //printf("%d#\n",deque->front->value);
+    deque->size++;
   }
 }
 //Retira o valor do final caso não esteja vazia
@@ -186,7 +195,7 @@ void     dequeue_rear (deque_t *deque)
   node_t *aux = NULL;
   if(deque->size == 0)
   {
-    return -1;
+    return;
   }
   else
   {
@@ -199,10 +208,10 @@ void     dequeue_rear (deque_t *deque)
 //Retira o valor da frente caso não esteja vazia
 void     dequeue_front(deque_t *deque)
 {
-  node_t *aux = NULL;
+  node_t* aux = NULL;
   if(deque->size == 0)
   {
-    return -1;
+    return;
   }
   else
   {
@@ -225,9 +234,13 @@ void     erase        (deque_t *deque)
 //terminando com um \n, lembrando de respeitar os conceitos de fila.
 void     print        (deque_t *deque)
 {
-  deque_t* aux;
-  while(aux != NULL)
+  node_t* aux = deque->front;
+  deque_t* auxdq = deque;
+  while(auxdq->size != 0)
   {
-    printf("%d\n",aux->front->value);
+    printf("%d ",aux->value);
+    auxdq->size--;
+    aux = aux->next;
   }
+  printf("\n");
 }
