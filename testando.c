@@ -82,7 +82,7 @@ int main() {
     print(deque);
     dequeue_rear (deque);
     print(deque);
-    
+
   	erase(deque);
   	for(i = 0; i < 3; ++i)
   		enqueue_rear(deque, i);
@@ -114,7 +114,8 @@ deque_t* construct ()
 //Libera a memória do conteúdo e do próprio deque
 void     destruct     (deque_t *deque)
 {
-  while(deque != NULL)
+  deque->size--;
+  while(deque->size != 0)
   {
     dequeue_front(deque);
   }
@@ -195,36 +196,40 @@ void     dequeue_rear (deque_t *deque)
   node_t *aux = NULL;
   if(deque->size == 0)
   {
-    return;
+    printf("EMPTY\n");
   }
   else
   {
     aux = deque->rear;
-    deque->rear = aux->next;
-    deque->rear->prev = NULL;
+    deque->rear = aux->prev;
+    deque->rear->next = NULL;
+    free(aux);
   }
   deque->size--;
 }
+
 //Retira o valor da frente caso não esteja vazia
 void     dequeue_front(deque_t *deque)
 {
   node_t* aux = NULL;
   if(deque->size == 0)
   {
-    return;
+    printf("EMPTY\n");
   }
   else
   {
     aux = deque->front;
-    deque->front = aux->prev;
-    deque->front->next = NULL;
+    deque->front = aux->next;
+    deque->front->prev = NULL;
+    free(aux);
   }
   deque->size--;
 }
 //Limpa o conteudo do deque(deixa ele vazio)
 void     erase        (deque_t *deque)
 {
-  while(deque != NULL)
+  deque->size--;
+  while(deque->size != 0)
   {
     dequeue_front(deque);
   }
@@ -235,12 +240,19 @@ void     erase        (deque_t *deque)
 void     print        (deque_t *deque)
 {
   node_t* aux = deque->front;
-  deque_t* auxdq = deque;
-  while(auxdq->size != 0)
+  while(1)
   {
-    printf("%d ",aux->value);
-    auxdq->size--;
-    aux = aux->next;
+    if(aux == NULL)
+    {
+      break;
+    }
+    else
+    {
+      printf("%d ",aux->value);
+      aux = aux->next;
+    }
+    
   }
   printf("\n");
+  //printf("%d####\n",deque->size);
 }
