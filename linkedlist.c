@@ -20,6 +20,31 @@ node* addtolist(node *head,int item)
 	new_node->next = head;
 	return new_node;
 }
+void addintheend(node*head,int item)
+{
+    if(head == NULL)
+    {
+        node* new_node = (node*) malloc(sizeof(node));
+	    new_node->item = item;
+	    new_node->next = NULL;
+        head = new_node;
+    }
+    else if(head != NULL)
+    {
+        node* new_node = (node*) malloc(sizeof(node));
+	    new_node->item = item;
+	    new_node->next = NULL;
+        node *aux = head;
+        while(aux != NULL)
+        {
+            aux = aux->next;
+        }
+        if(aux->next == NULL)
+        {
+            aux = new_node;
+        }
+    }
+}
 node* search(node *head,int item)
 {
 	while(head != NULL)
