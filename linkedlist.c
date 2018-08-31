@@ -20,7 +20,7 @@ node* addtolist(node *head,int item)
 	new_node->next = head;
 	return new_node;
 }
-void addintheend(node*head,int item)
+node* addintheend(node*head,int item)
 {
     if(head == NULL)
     {
@@ -28,21 +28,24 @@ void addintheend(node*head,int item)
 	    new_node->item = item;
 	    new_node->next = NULL;
         head = new_node;
+		return head;
     }
     else if(head != NULL)
     {
+		//printf("...\n");
         node* new_node = (node*) malloc(sizeof(node));
 	    new_node->item = item;
 	    new_node->next = NULL;
         node *aux = head;
-        while(aux != NULL)
+        while(aux->next != NULL)
         {
             aux = aux->next;
         }
         if(aux->next == NULL)
         {
-            aux = new_node;
+            aux->next = new_node;
         }
+		return head;
     }
 }
 node* search(node *head,int item)
@@ -79,10 +82,10 @@ int is_empty(node *head)
 void print_linked_list(node *head)
 {
 	node* current = head;
-	if (current != NULL)
+	while(current != NULL)
 	{
-		printf("%d\n",current->item);
-		print_linked_list(current->next);
+		printf("%d!\n",current->item);
+		current = current->next;
 	}
 }
 int main(int argc, char const *argv[])
@@ -94,7 +97,7 @@ int main(int argc, char const *argv[])
 	for(i=0;i < size;i++)
 	{
 		scanf("%d",&elements[i]);
-		list = addtolist(list,elements[i]);
+		list = addintheend(list,elements[i]);
 	}
 	print_linked_list(list);
 	return 0;
