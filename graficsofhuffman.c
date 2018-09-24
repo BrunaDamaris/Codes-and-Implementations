@@ -8,6 +8,9 @@
 #define MAXT 100000
 #define MAX_SIZE 100000
 
+GtkWidget* progress;
+gdouble fraction = 1.0;
+
 typedef struct HEAP heap;
 typedef struct hash_table hash_table;
 typedef struct element element;
@@ -153,11 +156,41 @@ void start(char* filename)
 	}
 	fclose(file_in);
 	hashtoheap(heap,hash);
+	int i;
+	for(i=0;i < 200;++i)
+	{
+		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progress),fraction);
+	}
 	int constsize = heap->size;
 	heapsort(heap);
 	heap->size = constsize;
 	//print_heap(heap);//printa dps do heapsort,pode tirar isso se quiser
 	//return 0;
+}
+
+void progressbar()
+{
+	GtkWidget* window;
+	GtkWidget* button;
+	GtkWidget* boxv1;
+	GtkWidget *label;
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	g_signal_connect(G_OBJECT(window),"destroy",G_CALLBACK(gtk_main_quit),NULL);
+	gtk_window_set_default_size (GTK_WINDOW(window),50,50);
+	gtk_window_set_title(GTK_WINDOW(window),"Compactando");
+	gtk_container_set_border_width(GTK_CONTAINER(window),50);
+
+	boxv1 = gtk_vbox_new(FALSE,0);
+	gtk_container_add(GTK_CONTAINER(window),boxv1);
+
+	progress = gtk_progress_bar_new();
+	gtk_box_pack_start(GTK_BOX(boxv1),progress,FALSE,FALSE,0);
+
+	label = gtk_label_new("Compactando...");
+	gtk_box_pack_start(GTK_BOX(boxv1),label,FALSE,FALSE,0);
+
+	gtk_widget_show_all(window);
 }
 
 void create_dialog(GtkWindow* window,gpointer data)
@@ -186,36 +219,92 @@ void create_dialog(GtkWindow* window,gpointer data)
 	    g_free(myfile);
 	}
 
+	progressbar();
+
 	gtk_widget_destroy(dialog);
 }
 
-int main(int argc, char *argv[])
+void compactar()
 {
 	GtkWidget* window;
 	GtkWidget* button;
 	GtkWidget* boxv1;
 
-	gtk_init(&argc,&argv);
-
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	g_signal_connect(G_OBJECT(window),"destroy",G_CALLBACK(gtk_main_quit),NULL);
 	gtk_window_set_default_size (GTK_WINDOW(window), 200, 200);
-	gtk_window_set_title(GTK_WINDOW(window),"HBP");
+	gtk_window_set_title(GTK_WINDOW(window),"Compactar");
 	gtk_container_set_border_width(GTK_CONTAINER(window),200);
 
-	boxv1 = gtk_box_new(FALSE,0);
+	boxv1 = gtk_vbox_new(FALSE,0);
 	gtk_container_add(GTK_CONTAINER(window),boxv1);
 
 	button = gtk_button_new_with_label("Selecionar arquivo");
 	g_signal_connect(G_OBJECT (button),"clicked",G_CALLBACK(create_dialog),NULL);
 	gtk_box_pack_start(GTK_BOX(boxv1),button,FALSE,FALSE,0);
 
+	gtk_widget_show_all(window);
+}
 
-	//chooser = GTK_FILE_CHOOSER(button);
-	//myfile = gtk_file_chooser_button_get_title(GTK_FILE_CHOOSER_BUTTON(button));
+int main(int argc, char *argv[])
+{
+	GtkWidget* window;
+	GtkWidget* button1;
+	GtkWidget* button2;
+	GtkWidget* button3;
+	GtkWidget* boxv1;
+	GdkColor color;
+	GdkColor color1;
+
+	gtk_init(&argc,&argv);
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	g_signal_connect(G_OBJECT(window),"destroy",G_CALLBACK(gtk_main_quit),NULL);
+	gtk_window_set_default_size (GTK_WINDOW(window), 614,345);
+	gtk_window_set_title(GTK_WINDOW(window),"HBP");
+	gtk_container_set_border_width(GTK_CONTAINER(window),200);
+
+	boxv1 = gtk_vbox_new(FALSE,0);
+	gtk_container_add(GTK_CONTAINER(window),boxv1);
+
+	button1 = gtk_button_new_with_label("Compactar");
+	g_signal_connect(G_OBJECT (button1),"clicked",G_CALLBACK(compactar),NULL);
+	gtk_box_pack_start(GTK_BOX(boxv1),button1,FALSE,FALSE,0);
+	
+	button2 = gtk_button_new_with_label("Descompactar");
+	g_signal_connect(G_OBJECT (button2),"clicked",G_CALLBACK(compactar),NULL);
+	gtk_box_pack_start(GTK_BOX(boxv1),button2,FALSE,FALSE,0);
+	
+	button3 = gtk_button_new_with_label("Informações");
+	g_signal_connect(G_OBJECT (button3),"clicked",G_CALLBACK(compactar),NULL);
+	gtk_box_pack_start(GTK_BOX(boxv1),button3,FALSE,FALSE,0);
+
+	gdk_color_parse ("turquoise", &color);
+	gtk_widget_modify_bg(GTK_WIDGET(window), GTK_STATE_NORMAL, &color);
+
+    if(GTK_IS_BIN(button1)) 
+    {
+        GtkWidget *children = gtk_bin_get_child(GTK_BIN(button1));
+        gdk_color_parse ("white", &color1);
+        gtk_widget_modify_fg (children, GTK_STATE_NORMAL, &color1);
+    }
+
+    if(GTK_IS_BIN(button2))
+    {
+        GtkWidget *children = gtk_bin_get_child(GTK_BIN(button2));
+        gdk_color_parse ("white", &color1);
+        gtk_widget_modify_fg (children, GTK_STATE_NORMAL, &color1);
+    }
+
+    if(GTK_IS_BIN(button3))
+    {
+        GtkWidget *children = gtk_bin_get_child(GTK_BIN(button3));
+        gdk_color_parse ("white", &color1);
+        gtk_widget_modify_fg (children, GTK_STATE_NORMAL, &color1);
+    }
+
 
 	gtk_widget_show_all(window);
-
 	gtk_main();
 }
 
@@ -338,4 +427,4 @@ void heapsort(heap* heap)
         heap->size--;
         heapfy(heap,1);
     }
-}	
+}
