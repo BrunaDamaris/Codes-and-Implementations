@@ -246,6 +246,29 @@ void compactar()
 	gtk_widget_show_all(window);
 }
 
+void about()
+{
+	GtkWidget* window;
+	GtkWidget* button;
+	GtkWidget* boxv1;
+	GtkWidget* dialog;
+	const char* myabout = "HBT";
+
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	g_signal_connect(G_OBJECT(window),"destroy",G_CALLBACK(gtk_main_quit),NULL);
+	gtk_window_set_default_size (GTK_WINDOW(window), 200, 200);
+	gtk_window_set_title(GTK_WINDOW(window),"CREDITOS");
+	gtk_container_set_border_width(GTK_CONTAINER(window),200);
+
+	// dialog = gtk_about_dialog_new();
+	// gtk_container_add(GTK_CONTAINER(window),dialog);
+
+	// gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog),myabout);
+ //    gtk_about_dialog_get_program_name(GTK_ABOUT_DIALOG(dialog));
+
+	gtk_widget_show_all(window);
+}
+
 int main(int argc, char *argv[])
 {
 	GtkWidget* window;
@@ -276,7 +299,7 @@ int main(int argc, char *argv[])
 	gtk_box_pack_start(GTK_BOX(boxv1),button2,FALSE,FALSE,0);
 	
 	button3 = gtk_button_new_with_label("Informações");
-	g_signal_connect(G_OBJECT (button3),"clicked",G_CALLBACK(compactar),NULL);
+	g_signal_connect(G_OBJECT (button3),"clicked",G_CALLBACK(about),NULL);
 	gtk_box_pack_start(GTK_BOX(boxv1),button3,FALSE,FALSE,0);
 
 	gdk_color_parse ("turquoise", &color);
@@ -302,7 +325,6 @@ int main(int argc, char *argv[])
         gdk_color_parse ("white", &color1);
         gtk_widget_modify_fg (children, GTK_STATE_NORMAL, &color1);
     }
-
 
 	gtk_widget_show_all(window);
 	gtk_main();
