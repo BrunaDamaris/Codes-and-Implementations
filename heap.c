@@ -129,11 +129,11 @@ void max_hfy(heap* heap,int i)
     {
         largest = i;
     }
-    if((right_index <= heap->size) && (heap->items[i] < heap->items[right_index]))
+    if((right_index <= heap->size) && (heap->items[largest] < heap->items[right_index]))
     {
         largest = right_index;
     }
-    if(heap->items[i] != heap->items[largest])
+    if(i != largest)
     {
         aux = heap->items[i];
         heap->items[i] = heap->items[largest];
