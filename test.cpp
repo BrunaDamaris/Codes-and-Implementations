@@ -80,19 +80,17 @@ int main() {
 			minor = dist[i];
 		}
 	}
-	/*for(i = 1; i <= numberofedges;++i){
-		if(dist[i] == minor) 
-		{
-			if(i <= minorindex && number[i] != 0) minorindex = i;
-		}
-	}
-	cout << minorindex << endl;*/
+	//for(i = 1; i <= numberofedges;++i){
+		//if(dist[i] == minor) 
+		//{
+			//if(i <= minorindex && number[i] != 0) minorindex = i;
+		//}
+	//}
+	//cout << minorindex << endl;
 	for(i = 1; i <= numberofedges;++i){
 		if(number[i] != 0){
 				cout << i << endl;
 				break;
 			}
 	}
-}
-
-*/
+}*/
