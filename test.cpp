@@ -18,6 +18,21 @@ void dfs(int u){
 	}
 }
 
+void bfs(int n) {
+	queue <int> line;
+	line.push(n);
+	while(line.empty() == false) {
+		int u = line.front();
+		vis[u] = 1;
+		line.pop();
+		for(auto i: list[u]){
+			if(vis[i] == false) {
+				line.push(i);
+			}
+		}
+	}
+}
+
 int main(){
 	int i;
 	vector< pair <int, int> > arestas;
