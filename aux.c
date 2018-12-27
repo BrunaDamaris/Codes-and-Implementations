@@ -6,7 +6,7 @@
 int main() {
     double totalprice = 0, discount = 0;
     char meatchoice[3],bread,adultdrinks,childrendrinks;
-    int adults,children,control = 0,drinks = 0;
+    int adults = 0,children = 0,control = 0,drinks = 0;
     scanf("%s",meatchoice);
     getchar();
     scanf("%c\n%c\n%c\n",&bread,&adultdrinks,&childrendrinks);
@@ -35,7 +35,6 @@ int main() {
         if(adultdrinks == 'S'){
             drinks = adults * 2;
             totalprice += drinks * 8;
-            drinks = 0;
         }
         if(childrendrinks == 'S'){
             drinks = children * 0.5;
